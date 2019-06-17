@@ -32,7 +32,7 @@ Choose whether to match items using `GUID` or `MD5`.  Use GUID when the destinat
 
 Then choose the annotation types to be imported (currently only Markups are supported).
 
-Then decide how markups should be treated when the given markup set in the DB file already exists in the case.  Checking **Append if Marup Set Already Exists** will add new markups to any markup set that may already exist.  Leaving this option unchecked will create a new markup set with a suffixed name if a markup set in the DB file is found to already exist in the destination case.
+Then decide how markups should be treated when the given markup set in the DB file already exists in the case.  Checking **Append if Markup Set Already Exists** will add new markups to any markup set that may already exist.  Leaving this option unchecked will create a new markup set with a suffixed name if a markup set in the DB file is found to already exist in the destination case.
 
 # Cloning this Repository
 
