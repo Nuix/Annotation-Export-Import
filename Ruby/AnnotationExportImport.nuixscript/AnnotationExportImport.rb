@@ -69,7 +69,6 @@ if dialog.getDialogResult == true
 
 	ProgressDialog.forBlock do |pd|
 		pd.setTitle("Annotation Export/Import")
-		pd.setAbortButtonVisible(false)
 
 		current_annotation_type = ""
 
@@ -82,7 +81,10 @@ if dialog.getDialogResult == true
 			repo.whenMessageLogged{|message| pd.logMessage(message)}
 			repo.whenProgressUpdated do |current,total|
 				pd.setMainProgress(current,total)
-				pd.setMainStatus("Exporting #{current_annotation_type} #{current}/#{total}")
+				pd.setMainStatus("Exporting #{current_annotation_type} for Item #{current}/#{total}")
+				if pd.abortWasRequested
+					repo.abort
+				end
 			end
 
 			if export_markup_sets
@@ -107,6 +109,9 @@ if dialog.getDialogResult == true
 			repo.whenProgressUpdated do |current,total|
 				pd.setMainProgress(current,total)
 				pd.setMainStatus("Importing #{current_annotation_type} #{current}/#{total}")
+				if pd.abortWasRequested
+					repo.abort
+				end
 			end
 
 			if import_markup_sets

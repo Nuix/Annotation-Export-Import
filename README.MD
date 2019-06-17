@@ -1,13 +1,13 @@
-[PROJECT_NAME]
-==============
+Annotation Export/Import
+========================
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0) ![This script was last tested in Nuix 7.8](https://img.shields.io/badge/Script%20Tested%20in%20Nuix-7.8-green.svg)
 
-View the GitHub project [here](LINK_TO_PROJECT) or download the latest release [here](LINK_TO_PROJECT_RELEASES).
+View the GitHub project [here](https://github.com/Nuix/Annotation-Export-Import) or download the latest release [here](https://github.com/Nuix/Annotation-Export-Import/releases).
 
 # Overview
 
-This script [PROJECT_DESCRIPTION]
+This script provides a way to export annotations from one case and then import them back in to another case.  Annotations are stored in a SQLite database.  During import, records in SQLite database file can be matched to items in destination case by either GUID or MD5.
 
 # Getting Started
 
@@ -20,7 +20,19 @@ Begin by downloading the latest release of this code.  Extract the contents of t
 
 # Usage
 
-[PROJECT_USAGE_SECTIONS]
+## Export
+
+To export annotations, begin by checking the "Export Annotations" radio button.  Then provide a file path to which the SQLite DB file will be saved.  Choose the annotation types to be exported (currently only Markups are supported), then click the "Ok" button.
+
+## Import
+
+To import annotations previously exported to a SQLite DB file by this script, begin by clicking "Import Annotations".  Then select the existing SQLite DB file created previously by exporting annotations with this script.
+
+Choose whether to match items using `GUID` or `MD5`.  Use GUID when the destination case is a copy of the source case and you know the GUIDs in destination case will match the GUIDs in the source case.  Use MD5 when you know the destination case has the same data as the source case, but not necessarily the same GUIDs.  You'll will likely want to use MD5 if the destination case was a reprocess of the same data as the destination case, since the GUIDs will be different.
+
+Then choose the annotation types to be imported (currently only Markups are supported).
+
+Then decide how markups should be treated when the given markup set in the DB file already exists in the case.  Checking **Append if Marup Set Already Exists** will add new markups to any markup set that may already exist.  Leaving this option unchecked will create a new markup set with a suffixed name if a markup set in the DB file is found to already exist in the destination case.
 
 # Cloning this Repository
 
