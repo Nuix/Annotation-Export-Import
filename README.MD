@@ -22,7 +22,7 @@ Begin by downloading the latest release of this code.  Extract the contents of t
 
 ## Export
 
-To export annotations, begin by checking the "Export Annotations" radio button.  Then provide a file path to which the SQLite DB file will be saved.  Choose the annotation types to be exported (currently only Markups are supported), then click the "Ok" button.
+To export annotations, begin by checking the "Export Annotations" radio button.  Then provide a file path to which the SQLite DB file will be saved.  Choose the annotation types to be exported (currently only Markups and Tags are supported), then click the "Ok" button.
 
 ## Import
 
@@ -30,9 +30,9 @@ To import annotations previously exported to a SQLite DB file by this script, be
 
 Choose whether to match items using `GUID` or `MD5`.  Use GUID when the destination case is a copy of the source case and you know the GUIDs in destination case will match the GUIDs in the source case.  Use MD5 when you know the destination case has the same data as the source case, but not necessarily the same GUIDs.  You'll will likely want to use MD5 if the destination case was a reprocess of the same data as the destination case, since the GUIDs will be different.
 
-Then choose the annotation types to be imported (currently only Markups are supported).
+Then choose the annotation types to be imported (currently only Markups and Tags are supported).
 
-Then decide how markups should be treated when the given markup set in the DB file already exists in the case.  Checking **Append if Markup Set Already Exists** will add new markups to any markup set that may already exist.  Leaving this option unchecked will create a new markup set with a suffixed name if a markup set in the DB file is found to already exist in the destination case.
+If importing Markups, then decide how markups should be treated when the given markup set in the DB file already exists in the case.  Checking **Append if Markup Set Already Exists** will add new markups to any markup set that may already exist.  Leaving this option unchecked will create a new markup set with a suffixed name if a markup set in the DB file is found to already exist in the destination case.
 
 # Cloning this Repository
 

@@ -32,18 +32,22 @@ general_tab.appendRadioButton("import_annotations","Import Annotations","operati
 general_tab.appendHeader("Export Settings")
 general_tab.appendSaveFileChooser("export_database_file","Export Database File","SQLite DB (*.db)","db","C:\\")
 general_tab.appendCheckBox("export_markup_sets","Export Markup Sets",true)
+general_tab.appendCheckBox("export_tags","Export Tags",true)
 general_tab.enabledOnlyWhenChecked("export_database_file","export_annotations")
 general_tab.enabledOnlyWhenChecked("export_markup_sets","export_annotations")
+general_tab.enabledOnlyWhenChecked("export_tags","export_annotations")
 
 general_tab.appendHeader("Import Settings")
 general_tab.appendOpenFileChooser("import_database_file","Import Database File","SQLite DB (*.db)","db","C:\\")
 general_tab.appendComboBox("annotation_matching_method","Match DB Records to Items Using",["GUID","MD5"])
 general_tab.appendCheckBox("import_markup_sets","Import Markup Sets",true)
 general_tab.appendCheckBox("append_markups","Append if Markup Set Already Exists",false)
+general_tab.appendCheckBox("import_tags","Import Tags",true)
 general_tab.enabledOnlyWhenChecked("import_database_file","import_annotations")
 general_tab.enabledOnlyWhenChecked("annotation_matching_method","import_annotations")
 general_tab.enabledOnlyWhenChecked("append_markups","import_annotations")
 general_tab.enabledOnlyWhenChecked("import_markup_sets","import_annotations")
+general_tab.enabledOnlyWhenChecked("import_tags","import_annotations")
 
 dialog.validateBeforeClosing do |values|
 	if values["export_annotations"]
@@ -76,6 +80,7 @@ if dialog.getDialogResult == true
 			pd.logMessage("Operation: Export")
 			export_database_file = values["export_database_file"]
 			export_markup_sets = values["export_markup_sets"]
+			export_tags = values["export_tags"]
 
 			repo = AnnotationRepository.new(export_database_file)
 			repo.whenMessageLogged{|message| pd.logMessage(message)}
@@ -89,7 +94,12 @@ if dialog.getDialogResult == true
 
 			if export_markup_sets
 				current_annotation_type = "Markups"
-				repo.storeAllMarkupSets($current_case) if export_markup_sets
+				repo.storeAllMarkupSets($current_case)
+			end
+
+			if export_tags
+				current_annotation_type = "Tags"
+				repo.storeAllTags($current_case)
 			end
 
 			repo.close
@@ -103,6 +113,7 @@ if dialog.getDialogResult == true
 			end
 			import_markup_sets = values["import_markup_sets"]
 			append_markups = values["append_markups"]
+			import_tags = values["import_tags"]
 
 			repo = AnnotationRepository.new(import_database_file)
 			repo.whenMessageLogged{|message| pd.logMessage(message)}
@@ -117,6 +128,11 @@ if dialog.getDialogResult == true
 			if import_markup_sets
 				current_annotation_type = "Markups"
 				repo.applyMarkupsFromDatabaseToCase($current_case,append_markups,annotation_matching_method)
+			end
+
+			if import_tags
+				current_annotation_type = "Tags"
+				repo.applyTagsFromDatabaseToCase($current_case,annotation_matching_method)
 			end
 
 			repo.close
